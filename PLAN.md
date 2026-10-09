@@ -1,7 +1,7 @@
 # storeShop Implementation Plan
 
 Date: 2026-10-09
-Status: In progress — Next.js foundation implemented; commerce migration pending
+Status: In progress — storefront, checkout drafts, local shopping features, and CI implemented; live commerce integration pending
 Requirements: [RFP.md](./RFP.md)
 
 ## Target and mandatory constraints
@@ -42,8 +42,8 @@ Completion: a documented route/API inventory, known limitations, and agreed comp
 - [x] Add CI checks for project-owned JavaScript/JSX application files and disallowed styling imports/dependencies.
 - [x] Create server-only backend environment configuration and an example environment file without secrets.
 - [x] Build a typed API adapter with runtime response validation, explicit errors, bounded timeouts, and a safe-read retry policy.
-- [ ] Define public catalog caching separately from uncached checkout, payment results, and tracking.
-- [ ] Configure loading, error, and not-found boundaries plus redacted error reporting.
+- [x] Define public catalog caching separately from uncached checkout, payment results, and tracking.
+- [x] Configure loading, error, and not-found boundaries plus redacted error reporting.
 
 Suggested source organization:
 
@@ -85,7 +85,7 @@ Completion: the foundation passes lint, type checks, and production build; no se
 - [x] Replace legacy sliders with accessible controls styled entirely through Tailwind.
 - [x] Add loading, empty, unavailable, invalid-identifier, and backend-failure states.
 - [ ] Implement shared digit normalization, Persian formatting, Jalali dates, and integer currency rules after units are confirmed.
-- [ ] Add metadata, canonical URLs, and social previews; add sitemap and product structured data only for valid available data.
+- [x] Add metadata, canonical URLs, and social previews; add sitemap and product structured data only for valid available data.
 - [ ] Verify RTL layout, mixed-direction identifiers, keyboard navigation, and touch behavior.
 
 Completion: existing storefront/product URLs work through direct navigation and reload, with preserved product-code and option behavior.
@@ -121,10 +121,10 @@ Confirm the first-release subset before implementation. Quote and track backend 
 
 ### Priority 1 backlog
 
-- [ ] Search, filters, and sorting with shareable URL parameters. Document whether results cover the full catalog or only loaded products.
-- [ ] Persistent store-specific cart with quantities and distinct variants, reload recovery, and unavailable-item handling.
+- [x] Search, filters, and sorting with shareable URL parameters. Document whether results cover the full catalog or only loaded products.
+- [x] Persistent store-specific cart with quantities and distinct variants, reload recovery, and unavailable-item handling.
 - [ ] Multi-item checkout only after the backend supports cart purchase creation, authoritative totals, and deduplication.
-- [ ] Local wishlist with reload persistence and deleted-product handling.
+- [x] Local wishlist with reload persistence and deleted-product handling.
 - [ ] Order summary and backend-supported shipping methods, costs, and delivery estimates.
 
 ### Later backlog
@@ -140,8 +140,8 @@ Completion: each approved feature passes its agreed scenarios. Accounts, shippin
 
 ## Phase 7 — Validate, release, and hand over
 
-- [ ] Run ESLint with zero errors/warnings, TypeScript checks, focused tests, and production build as separate required CI steps.
-- [ ] Confirm no retained project-owned JavaScript/JSX application source or disallowed styling dependencies/imports remain.
+- [x] Run ESLint with zero errors/warnings, TypeScript checks, focused tests, and production build as separate required CI steps.
+- [x] Confirm no retained project-owned JavaScript/JSX application source or disallowed styling dependencies/imports remain.
 - [ ] Test number normalization, currency rules, API failures, malformed responses, cross-store isolation, and transaction deduplication.
 - [ ] Run browser checks for storefront lookup, option selection, checkout recovery, payment outcomes, repeated gateway returns, and tracking.
 - [ ] Verify approved feature scenarios such as cart restoration, variant identity, and changed-price confirmation.
@@ -150,7 +150,7 @@ Completion: each approved feature passes its agreed scenarios. Accounts, shippin
 - [ ] Review dependencies, secret handling, log redaction, caching, and gateway redirect restrictions.
 - [ ] Prepare a Node-capable staging deployment; replace legacy static SPA hosting configuration.
 - [ ] Define legacy service-worker/cache retirement, deployment health checks, monitoring, and rollback steps.
-- [ ] Update README with installation, environment setup, commands, API assumptions, and deployment instructions.
+- [x] Update README with installation, environment setup, commands, API assumptions, and deployment instructions.
 - [ ] Obtain staging/business acceptance and complete real integration checks before production launch.
 
 Completion: all mandatory RFP acceptance criteria and approved feature criteria pass; remaining limitations and support ownership are documented.
@@ -188,3 +188,35 @@ The guest form validates names, normalized Iranian mobile numbers, optional emai
 Tracking lookup and invoice routes now exist. Live order reads default to disabled via `ORDER_LOOKUP_ENABLED`; enable only after authorization, rate limiting, and API contracts are verified. Labeled preview tracking is at `/preview/track` (sample code `12345`), with payment success/failure/cancelled/pending/unknown states under `/preview/result/[status]`. A legacy `done: false` maps to unknown, not an assumed failure. Jalali dates use the Persian calendar and Asia/Tehran timezone. Private routes/API responses use no-store, noindex, and no-referrer protections.
 
 Verification: ESLint, strict type checks, 13 focused tests, active-source gate, and production build pass. The running-server smoke check verifies draft creation, refresh recovery, tampering, cross-origin rejection, invalid options/IDs, missing-draft recovery, disabled real purchases, private-cache/indexing headers, preview tracking, all five payment states, and draft deletion. No live backend payment or browser UI checks were performed.
+
+## Local shopping and verification update — 2026-10-09
+
+Catalog name/code search, integer price ranges, and default/price/name sorting now use shareable URL query parameters. Search normalizes Persian/Arabic digits and letter variants and is explicitly limited to the products returned in the current catalog. Category and availability filters remain dependent on verified API fields. Invalid bounds show an error; empty searches have a recovery state.
+
+Wishlist and cart references persist in localStorage under separate store and preview/live keys. Variants use ordered option selections as distinct identities; repeat adds merge quantities, which are limited to 1–99. Stored data is schema-checked, capped, and contains no customer details. Corrupt/cross-store state is discarded. Items missing from the currently returned catalog are flagged for inspection rather than assumed deleted. Cart prices are labeled snapshots/estimates and multi-item payment remains disabled. Browser storage events synchronize open tabs. Serialization, variants, isolation, limits, removal, and wishlist behavior are unit-tested; actual browser storage/UI verification remains pending.
+
+Public catalog cache policy is explicitly configurable (0 by default, maximum 300 seconds); sensitive reads and checkout product revalidation always bypass it. Backend errors now emit allowlisted, redacted events with correlation IDs. The production smoke check caught and fixed an internal-host Origin mismatch: checkout validation uses the incoming host, or an exact APP_ORIGIN for proxy deployments, and rejects untrusted forwarded-host values.
+
+Verification: lint, strict type checking, 25 tests, active-source checks, production build, and isolated production HTTP smoke checks pass. CI now runs the production smoke checks with an ephemeral signing key and live order reads disabled. A clean-install dry run passes with existing upstream ESLint-plugin peer-range warnings. Operations instructions are in docs/OPERATIONS.md. No live payment, order authorization, deployment, worker-retirement, or browser checks have been completed.
+
+## Legacy cleanup and worker retirement update — 2026-10-09
+
+Forty-one former CRA source/configuration, template, worker, font/image, icon, and Yarn-lock files are preserved in docs/legacy/storeShop-cra.zip. The manifest records original paths and SHA-256 hashes, and archive contents were verified before removal from active source/public paths. The release uses npm's lockfile only. No former JavaScript/JSX application source or old SPA shell remains in the active tree; historical files are offline reference material only. The app now has an original SVG icon and uses system fonts.
+
+The source gate now scans all src/scripts/tests/public paths and root executable files, parses TypeScript imports/JSX, and rejects JavaScript, extra stylesheets, unsupported styling libraries, and inline JSX styles. This removes the former legacy-source exemption and avoids interpreting test strings as executable imports.
+
+Retirement handlers now serve /sw.js, /service-worker.js, and /js/serviceworker.js with no-store JavaScript responses. Their source is TypeScript, compiled into an ignored generated TypeScript module by dev/build/test/check hooks; deploys do not require the TypeScript compiler at request time. The generated worker has no fetch handler. It skips waiting, cleans only default Workbox precaches whose suffix matches its registration scope, claims existing clients, and unregisters. Failures do not prevent the fetch-less replacement from activating. A client helper updates only known same-origin registrations, preserving unrelated/newer worker paths; it never registers a new worker or forces a reload. Custom historical worker paths/cache names require separate verification.
+
+Verification: lint, strict type checks, 31 tests, whole-project source checks, production build, production HTTP smoke checks, and all 41 archive hashes pass. Worker lifecycle tests execute the compiled script and cover owned-cache selection, failure handling, unregistration, and unrelated registrations. Production checks verify headers/script content at every worker URL and that /index.html renders the new not-found screen rather than the old SPA shell.
+
+Native Chrome inspection exposed the preview's expected product/gallery/option/cart/wishlist labels, but the browser changed during interaction checks. Browser storage, responsive layout, keyboard interaction, actual worker lifecycle, and WCAG acceptance remain unverified. The release checklist for worker retirement stays open until these browser checks and existing-client behavior are confirmed. Live backend/payment contracts and deployment acceptance also remain pending.
+
+## Metadata, health checks, and fixture contract update — 2026-10-09
+
+Public store/product metadata now includes canonical URLs and social previews only when SITE_ORIGIN is an exact HTTPS origin, CATALOG_INDEXING_ENABLED is true, and the store is listed in PUBLIC_STORE_CODES. Indexing defaults to disabled. robots.txt blocks crawling by default, and the sitemap is empty until explicitly configured; enabled sitemaps contain only validated configured stores/products and exclude preview/private routes. Sitemap generation is bounded to 20 configured stores, four concurrent reads, and 500 returned products per store. Store failures are omitted rather than replaced by preview data. Product JSON-LD escapes script boundaries and emits basic validated identity/content only; unconfirmed offers, currency, availability, reviews, and ratings are omitted. Live SEO acceptance and domain/data confirmation remain pending.
+
+/api/health reports web-process liveness. /api/ready checks backend URL configuration, draft-signing configuration, and production public origin; it reveals only booleans and never secrets or URLs. These are configuration checks, not live backend/payment health claims. Production requires an explicit HTTPS public origin (loopback HTTP is permitted for isolated tests). API/private responses remain no-store/noindex, and all responses now have nosniff protection. Backend base URLs with query strings, fragments, or embedded credentials are rejected.
+
+A synthetic loopback backend now tests the real dynamic store/product/tracking/invoice routes in an isolated production instance, including returned identity checks, numeric-string schema handling, private-field stripping, malformed/cross-store responses, blocked redirects, and checkout drafts. It serves no real data, rejects mutations, and verification requires zero backend mutation attempts. Live order reads are enabled only in that fixture instance; the user's app remains gated off. Contract notes and missing live acceptance inputs are documented in docs/BACKEND-CONTRACTS.md.
+
+Verification: lint, strict type checks, 35 tests, whole-project source checks, production build, preview production smoke checks, and real-route fixture contract checks pass. Actual backend schemas, units, stock, order authorization, gateway/idempotency contracts, browser acceptance, and staging/business approval remain unresolved. A public store reference and backend/payment documentation were requested for the next integration step.

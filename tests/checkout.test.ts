@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readDraft, signDraft, DRAFT_LIFETIME, type Draft } from "../src/lib/checkout/draft";
 import { customerSchema, draftInputSchema, purchasePayload, validateSelections } from "../src/lib/checkout/validation";
+import { isSameOrigin } from "../src/lib/checkout/origin";
 import { previewProducts } from "../src/lib/catalog/preview";
 const secret = "test-only-key-".repeat(4);
 const now = 1791504000000;
@@ -42,4 +43,14 @@ test("customer validation normalizes digits and carries the actual comment into 
  assert.equal(customerSchema.safeParse({ ...customer, full_name: "" }).success, false);
  assert.equal(customerSchema.safeParse({ ...customer, address: "" }).success, false);
  assert.throws(() => purchasePayload(previewProducts[0], ["wrong"], customer));
+});
+
+test("origin checks accept the incoming host or configured public origin, rejecting forged forwarding and cross-origin requests", () => {
+ const request = (origin?: string, host = "127.0.0.1:3100") => new Request("http://localhost:3100/api/checkout", { headers: { Host: host, ...(origin ? { Origin: origin } : {}), "x-forwarded-host": "untrusted.example", "x-forwarded-proto": "https" } });
+ assert.equal(isSameOrigin(request("http://127.0.0.1:3100")), true);
+ assert.equal(isSameOrigin(request("https://shop.example.com"), "https://shop.example.com"), true);
+ assert.equal(isSameOrigin(request("http://127.0.0.1:3100"), "https://shop.example.com"), false);
+ for (const origin of [undefined, "null", "https://untrusted.example", "http://127.0.0.1:3100/path", "https://127.0.0.1:3100"]) assert.equal(isSameOrigin(request(origin)), false);
+ assert.equal(isSameOrigin(request("http://127.0.0.1:3100", "evil.example/path")), false);
+ assert.equal(isSameOrigin(request("https://shop.example.com"), "https://shop.example.com/path"), false);
 });

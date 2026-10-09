@@ -1,0 +1,211 @@
+{
+  "purpose": "Inactive CRA migration reference; never deploy or import into the active application.",
+  "baselineCommit": "a3063488a049738cae39b7eefe57d95da409abd0",
+  "files": [
+    {
+      "path": "public/icon/android-launchericon-144-144.png",
+      "bytes": 6357,
+      "sha256": "4f4703b9dc8ab03c1a19cae9f801883606986d4b61ccca2cd9264a23d634180f"
+    },
+    {
+      "path": "public/icon/android-launchericon-192-192.png",
+      "bytes": 9215,
+      "sha256": "49efac1134f2a5c47ce8b77c016ee14b5823334f2458c0145ad04f7b549073f3"
+    },
+    {
+      "path": "public/icon/android-launchericon-48-48.png",
+      "bytes": 1445,
+      "sha256": "5c49d9d861b60ae9ea39289c5cee441b5d95e78f16749e542d953d4a2c6c81d3"
+    },
+    {
+      "path": "public/icon/android-launchericon-512-512.png",
+      "bytes": 31559,
+      "sha256": "10d57f226ee051aeb53eec878a42e4f8702c46895d8ecb1fca8f6d6ddc8fa95c"
+    },
+    {
+      "path": "public/icon/android-launchericon-72-72.png",
+      "bytes": 2540,
+      "sha256": "c6f9f9b7e87b3c3975651663959730023d08ea03a8b4b5047390fafd891534fa"
+    },
+    {
+      "path": "public/icon/android-launchericon-96-96.png",
+      "bytes": 3665,
+      "sha256": "0abea9b25ad61a1f332566b2f39a7ca6c444d47c90f345c8c436c7ba4e2a2190"
+    },
+    {
+      "path": "public/icon/download.png",
+      "bytes": 7008,
+      "sha256": "bcb2ad30b7911ac0bda2a03c4b2eb80b8e62bae682ff522d2f2846e853eb4068"
+    },
+    {
+      "path": "public/index.html",
+      "bytes": 1194,
+      "sha256": "64b8b65e67471f2bb3d54cbfc2d712bd031b2b0c04684b4ee96dcb0d51bc3114"
+    },
+    {
+      "path": "public/js/serviceworker.js",
+      "bytes": 952,
+      "sha256": "0a36cc2c4d9ae180ee315a2e6793524f96e173159a923600b2edf00a09878d5e"
+    },
+    {
+      "path": "public/manifest.hbs",
+      "bytes": 273,
+      "sha256": "aae148443d23b04fb2adc67888629b6b0c7c565e60ec0cd02bf33294823ffe20"
+    },
+    {
+      "path": "public/sw.js",
+      "bytes": 1986,
+      "sha256": "fdaa65ab58f60696bc361ceef216c54c7a073010de972b575ab3af10ae65029b"
+    },
+    {
+      "path": "server.js",
+      "bytes": 908,
+      "sha256": "49f58167039cc1bfbaa4ffde0575a08c92742626f1ec1c03d703b829beaed1c2"
+    },
+    {
+      "path": "src/Application.js",
+      "bytes": 2061,
+      "sha256": "723c02927f212eb547cdd47fb8c75c1e0b2e9b109ae138ccc60d598893c71ad0"
+    },
+    {
+      "path": "src/assets/fonts/IRANSans.eot",
+      "bytes": 203940,
+      "sha256": "eb98f37a7505f3115cd9ce6f0f72cec782eb25eed527df9fa7c1da6821e1a19c"
+    },
+    {
+      "path": "src/assets/fonts/IRANSans.woff",
+      "bytes": 62496,
+      "sha256": "6e7f895afe40fc75057dda2eff886fa98a4ea45d91c9e4b5ba6c8a05c5d4e307"
+    },
+    {
+      "path": "src/assets/fonts/IRANSans.woff2",
+      "bytes": 47796,
+      "sha256": "5c264aeba1a719009eca27768127492d6294d16ec3600b06445720ae1d184b59"
+    },
+    {
+      "path": "src/assets/image/picPoshtibany.png",
+      "bytes": 144505,
+      "sha256": "0f464a78129bcb55ac8f1558410df786aef67b47a6dc820f20c83865f65d40f9"
+    },
+    {
+      "path": "src/components/App.js",
+      "bytes": 1106,
+      "sha256": "812a1026dc1718dee7eeae30fc8e6d17e970cd7e12e5b097b5ab63e9a8c75109"
+    },
+    {
+      "path": "src/components/Home/Home.js",
+      "bytes": 7971,
+      "sha256": "b2a254f9e89a2f4f7377ae5fd74756e65697a00437c8978802857c648807cc36"
+    },
+    {
+      "path": "src/components/Home/HomeContainer.js",
+      "bytes": 1499,
+      "sha256": "e8446ccbd9caa4bced636cd640744ff1ac77c5c9c770163a39c100bcf0f24402"
+    },
+    {
+      "path": "src/components/NotFound/NotFound.js",
+      "bytes": 2479,
+      "sha256": "b168d350be873f0b30037ac54c656d8c23062a3e9b8169ca340a77eeef5bf6ae"
+    },
+    {
+      "path": "src/components/Products/Product.js",
+      "bytes": 21510,
+      "sha256": "28d32b4a43a9167eb69b5fb123d3853d65af6e555b6972f4e5d286f9a07479b9"
+    },
+    {
+      "path": "src/components/Products/ProductContainer.js",
+      "bytes": 1303,
+      "sha256": "0b639d73045a3629dd781a7157c2e333146c6a81430babf72d55e99aa054fa58"
+    },
+    {
+      "path": "src/components/PurchaseResult/ContainerForPayment.js",
+      "bytes": 1414,
+      "sha256": "1d42f7170d51f9906b0b2ecb4a2e82a3aab3cceb464388f5171f19ea1674ffd2"
+    },
+    {
+      "path": "src/components/PurchaseResult/PurchaseResult.js",
+      "bytes": 4986,
+      "sha256": "aae6e01e91378ad5da9749ced0eedf18b6f2fdf68ff736b8b61ae55c88e5ea86"
+    },
+    {
+      "path": "src/components/PurchaseResult/PurchaseResultContainer.js",
+      "bytes": 1331,
+      "sha256": "0aeaa7752ba27f74192ed73abe48f768c07cb3dffa6aeae910032ceaa6552afd"
+    },
+    {
+      "path": "src/components/TrackOrder/TrackOrder.js",
+      "bytes": 5084,
+      "sha256": "715bd74fb2345590d23e17d60fc48c2ca656a7ea5233a5468f907f575c3a12b6"
+    },
+    {
+      "path": "src/components/TrackOrder/TrackOrderContainer.js",
+      "bytes": 364,
+      "sha256": "7f00b00e6de865ffbf6b6956caf3f54f59de7189e36512dfcb76ca21106dbf15"
+    },
+    {
+      "path": "src/components/TrackResult/TrackResult.js",
+      "bytes": 4112,
+      "sha256": "0e9913307efe91617a06324576fb6b09b605bbd2cdeebd3e69120f57a1b27184"
+    },
+    {
+      "path": "src/components/TrackResult/TrackResultContainer.js",
+      "bytes": 1236,
+      "sha256": "5a85b58beee7df1b263d15c0724a9eb613d9a1cad81e741f86701e6af12bf225"
+    },
+    {
+      "path": "src/components/global/ConstApi.js",
+      "bytes": 405,
+      "sha256": "2db94aba7b1cc83a3bcbf28f208b383e32421cf9ca915a5b1dc6ba939f465823"
+    },
+    {
+      "path": "src/components/global/Loading.js",
+      "bytes": 679,
+      "sha256": "8b8546c245f2914b8ded6f960a497340770b9ea657736dc755245514b4315943"
+    },
+    {
+      "path": "src/components/global/api.js",
+      "bytes": 1568,
+      "sha256": "197cd27ce37071702f22c0926fc02791ab0342125dc1fdec0e2c678c8a3d28cc"
+    },
+    {
+      "path": "src/index.js",
+      "bytes": 439,
+      "sha256": "feecca3b6885e56b87a8fddb68cb9817e75725a3e2e5a92a8b24c41930aa3b7c"
+    },
+    {
+      "path": "src/tools/SpUtils.js",
+      "bytes": 1334,
+      "sha256": "d307ccedb35403c310c7d3eb8e768db21b538f24388df942ed7db82f75c4e0c0"
+    },
+    {
+      "path": "src/tools/serviceWorkerr.js",
+      "bytes": 4374,
+      "sha256": "89a678bc0ae27c33703aa8abf4bcfe354aacfab9affcc96905ee8a501a0767ff"
+    },
+    {
+      "path": "static.json",
+      "bytes": 89,
+      "sha256": "8db2283b217058e62d2d95cc89756e2c8c61db0dde8ff08e9f31926ef532f648"
+    },
+    {
+      "path": "views/index.hbs",
+      "bytes": 205,
+      "sha256": "73f349a2fd06c154eb7016902c7d154849da7ec470ed2a431e5c1735b4849d3f"
+    },
+    {
+      "path": "views/manifest.hbs",
+      "bytes": 273,
+      "sha256": "aae148443d23b04fb2adc67888629b6b0c7c565e60ec0cd02bf33294823ffe20"
+    },
+    {
+      "path": "workbox-config.js",
+      "bytes": 138,
+      "sha256": "37432336a8cae187c9e1f4d8439d51eb8a7e40bc0f2c6382e413e43f56c6c3ff"
+    },
+    {
+      "path": "yarn.lock",
+      "bytes": 296726,
+      "sha256": "5ba7a838dd7dfc3a57a526f71a59f39f6043e06a960972092db2f76f1d61b8c8"
+    }
+  ]
+}

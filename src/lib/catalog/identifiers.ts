@@ -1,5 +1,5 @@
 import { normalizeDigits } from "../localization/numbers";
-const reserved = new Set(["track", "result", "preview", "api"]);
+const reserved = new Set(["track", "result", "preview", "api", "js"]);
 export function normalizeIdentifier(value: string): string | null {
  const normalized = normalizeDigits(value).trim();
  return /^[a-zA-Z0-9_-]{1,80}$/.test(normalized) ? normalized : null;

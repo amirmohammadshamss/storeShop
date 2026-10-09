@@ -9,11 +9,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src/app src/lib scripts tests next.config.ts eslint.config.ts --max-warnings=0",
+    "lint": "eslint src scripts tests next.config.ts eslint.config.ts --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "check:source": "tsx scripts/check-source.ts",
-    "smoke": "tsx scripts/smoke.ts"
+    "smoke": "tsx scripts/smoke.ts",
+    "verify:production": "node --import tsx scripts/verify-production.ts",
+    "worker:build": "node --import tsx scripts/build-worker.ts",
+    "predev": "npm run worker:build",
+    "prebuild": "npm run worker:build",
+    "pretest": "npm run worker:build",
+    "pretypecheck": "npm run worker:build",
+    "prelint": "npm run worker:build",
+    "precheck:source": "npm run worker:build"
   },
   "dependencies": {
     "next": "16.4.0",

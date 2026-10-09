@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
+import { isSameOrigin } from "./origin";
 export function checkoutResponse(message: string, status: number) {
  return NextResponse.json({ message }, { status, headers: { "Cache-Control": "private, no-store" } });
 }
 export function sameOrigin(request: Request): boolean {
- const origin = request.headers.get("origin");
- return origin !== null && origin === new URL(request.url).origin;
+ return isSameOrigin(request, process.env.APP_ORIGIN);
 }
 export async function readSmallJson(request: Request): Promise<unknown> {
  if (!request.headers.get("content-type")?.startsWith("application/json")) throw new Error("Expected JSON");
