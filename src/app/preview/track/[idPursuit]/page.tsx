@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { normalizeIdentifier } from "@/lib/catalog/identifiers";
-import { TrackingView } from "../../../ui/order-views";
+import { TrackingView } from "../../../ui/orders/tracking-view";
 export const metadata = { title: "سفارش نمایشی", robots: { index: false, follow: false } };
 export default async function PreviewTrackingPage({ params }: { params: Promise<{ idPursuit: string }> }) {
  const { idPursuit } = await params; const code = normalizeIdentifier(idPursuit);

@@ -38,3 +38,7 @@ Former CRA source/assets/configuration are archived in `docs/legacy/storeShop-cr
 Indexing defaults to off. After verifying public catalog data, set SITE_ORIGIN to an exact HTTPS origin, CATALOG_INDEXING_ENABLED=true, and PUBLIC_STORE_CODES to a comma-separated store allowlist (maximum 20). Metadata, basic Product JSON-LD, robots.txt, and sitemap.xml follow that configuration; no price/stock offers are invented.
 
 `/api/health` checks web-process liveness. `/api/ready` reports configuration readiness without exposing secrets or URLs; it does not probe the backend or certify payment availability. See [backend contracts](docs/BACKEND-CONTRACTS.md) for fixtures and missing live integration requirements.
+
+## Source organization
+
+UI view files compose focused components under `src/app/ui/catalog`, `shopping`, `checkout`, `product`, and `orders`. Checkout and product hooks own interaction state; view components render the existing layout. Shopping schemas, storage, cart mutations, and wishlist mutations live in separate modules under `src/lib/shopping`, with existing imports preserved through `state.ts`. Smoke checks are organized by flow under `scripts/smoke`; the production runner delegates server lifecycle handling to `scripts/production-server.ts`.

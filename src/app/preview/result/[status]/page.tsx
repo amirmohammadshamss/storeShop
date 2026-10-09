@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { PaymentView } from "../../../ui/order-views";
+import { PaymentView } from "../../../ui/orders/payment-view";
 import type { PaymentState } from "@/lib/orders/schema";
 export const metadata = { title: "نتیجه پرداخت نمایشی", robots: { index: false, follow: false } };
 const states: PaymentState[] = ["success", "failed", "cancelled", "pending", "unknown"];
