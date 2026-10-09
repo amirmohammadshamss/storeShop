@@ -1,0 +1,9 @@
+import { notFound } from "next/navigation";
+import { PaymentView } from "../../../ui/order-views";
+import type { PaymentState } from "@/lib/orders/schema";
+export const metadata = { title: "نتیجه پرداخت نمایشی", robots: { index: false, follow: false } };
+const states: PaymentState[] = ["success", "failed", "cancelled", "pending", "unknown"];
+export default async function PreviewResultPage({ params }: { params: Promise<{ status: string }> }) {
+ const { status } = await params; const state = states.find(value => value === status); if (!state) notFound();
+ return <PaymentView preview state={state} invoice={{ invoice_id: "sample-101", done: state === "success", amount: 285000, create_date_unix_time: 1791504000, order_tracking_code: "12345" }} />;
+}

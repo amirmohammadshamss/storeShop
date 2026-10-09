@@ -1,50 +1,39 @@
 {
-  "name": "moltin-react-demo-store",
-  "version": "0.2.0",
+  "name": "storeshop",
+  "version": "0.3.0",
   "private": true,
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "precommit": "lint-staged"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint src/app src/lib scripts tests next.config.ts eslint.config.ts --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "check:source": "tsx scripts/check-source.ts",
+    "smoke": "tsx scripts/smoke.ts"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.10",
-    "axios": "^0.18.0",
-    "bootstrap": "^4.3.1",
-    "moment-jalaali": "^0.8.3",
-    "persianjs": "^0.4.0",
-    "popper.js": "^1.15.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.2.0",
-    "react-notifications-component": "^1.1.1",
-    "react-redux": "^5.0.5",
-    "react-router": "^4.1.1",
-    "react-router-dom": "^4.1.1",
-    "react-router-redux": "next",
-    "react-scripts": "^1.1.0",
-    "react-slick": "^0.24.0",
-    "react-spinners": "^0.5.4",
-    "redux": "^3.7.1",
-    "redux-form": "7.2.3",
-    "redux-thunk": "2.2.0",
-    "slick-carousel": "^1.8.1"
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "0.0.1",
+    "zod": "4.6.5"
   },
   "devDependencies": {
-    "axios-logger": "^1.0.0",
-    "eslint": "^5.16.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-node": "^9.1.0",
-    "eslint-plugin-promise": "^4.1.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.0.0",
-    "prettier": "1.10.2",
-    "redux-logger": "^3.0.6"
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.6.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "10.12.0",
+    "eslint-config-next": "16.4.0",
+    "jiti": "2.7.0",
+    "postcss": "8.5.29",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3"
   },
-  "lint-staged": {
-    "*.{js,json,css,md}": ["prettier --write", "git add"]
-  }
+  "type": "module"
 }
