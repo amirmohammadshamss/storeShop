@@ -1,3 +1,5 @@
+import { ordersText } from "@/content/fa/orders";
+import type { InvoicePageProps } from "@/types/routes";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getInvoice, orderLookupEnabled } from "@/lib/orders/data";
@@ -5,8 +7,8 @@ import { legacyPaymentState } from "@/lib/orders/schema";
 import { normalizeIdentifier } from "@/lib/catalog/identifiers";
 import { LookupUnavailable } from "../../ui/orders/lookup-unavailable";
 import { PaymentView } from "../../ui/orders/payment-view";
-export const metadata: Metadata = { title: "نتیجه پرداخت", robots: { index: false, follow: false } };
-export default async function InvoicePage({ params }: { params: Promise<{ invoice_id: string }> }) {
+export const metadata: Metadata = { title: ordersText.paymentResult, robots: { index: false, follow: false } };
+export default async function InvoicePage({ params }: InvoicePageProps) {
  const { invoice_id } = await params; const code = normalizeIdentifier(invoice_id); if (!code) notFound();
  if (!orderLookupEnabled()) return <LookupUnavailable />;
  const invoice = await getInvoice(code); if (!invoice) notFound();

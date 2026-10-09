@@ -220,3 +220,12 @@ Public store/product metadata now includes canonical URLs and social previews on
 A synthetic loopback backend now tests the real dynamic store/product/tracking/invoice routes in an isolated production instance, including returned identity checks, numeric-string schema handling, private-field stripping, malformed/cross-store responses, blocked redirects, and checkout drafts. It serves no real data, rejects mutations, and verification requires zero backend mutation attempts. Live order reads are enabled only in that fixture instance; the user's app remains gated off. Contract notes and missing live acceptance inputs are documented in docs/BACKEND-CONTRACTS.md.
 
 Verification: lint, strict type checks, 35 tests, whole-project source checks, production build, preview production smoke checks, and real-route fixture contract checks pass. Actual backend schemas, units, stock, order authorization, gateway/idempotency contracts, browser acceptance, and staging/business approval remain unresolved. A public store reference and backend/payment documentation were requested for the next integration step.
+
+## Text, types, environment, and constants refactor — 2026-10-09
+
+- [x] Move application Persian labels, notices, validation messages, metadata text, sample descriptions, and payment-state copy into dedicated content files.
+- [x] Move shared domain, route, component, environment, and worker types into `src/types`, retaining Zod-derived inference and compatible library exports.
+- [x] Centralize application environment reads in the request-time, server-only `src/config/env.server.ts` getter; preserve existing validation, defaults, and secret handling.
+- [x] Separate business limits, API paths, locale settings, input classes, worker paths, checkout field definitions, and sample catalog records into `src/constants`.
+
+Verification: ESLint with zero warnings, strict TypeScript checking, all 35 existing tests, the TypeScript/Tailwind source gate, production build, and isolated preview/backend-fixture HTTP checks pass. This refactor preserves the existing checkout and indexing gates and does not enable payments or change environment values.

@@ -1,3 +1,4 @@
+import type { ProductSummary } from "@/types/catalog";
 import { z } from "zod";
 const identifier = z.union([z.string().min(1), z.number().int().nonnegative()]).transform(String);
 const amount = z.union([z.number(), z.string().regex(/^\d+$/).transform(Number)]).pipe(z.number().int().nonnegative().safe());
@@ -15,9 +16,11 @@ export const productSchema = summarySchema.extend({
  store: storeSchema,
  features: z.union([z.literal(0), z.array(z.object({ name: z.string().min(1), desc: z.string() }))]).transform(value => value === 0 ? [] : value),
 });
-export type Store = z.infer<typeof storeSchema>;
-export type ProductSummary = z.infer<typeof summarySchema>;
-export type Product = z.infer<typeof productSchema>;
+
 export function productImages(value: ProductSummary["images_url"]): string[] { return (Array.isArray(value) ? value : value ? [value] : []).filter(Boolean); }
 // Legacy HTML descriptions are rendered as text, never injected into the DOM.
 export function plainDescription(value: string | null | undefined): string { return (value ?? "").replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ").trim(); }
+
+export type { Store } from "@/types/catalog";
+export type { ProductSummary } from "@/types/catalog";
+export type { Product } from "@/types/catalog";

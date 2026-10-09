@@ -1,6 +1,6 @@
-import type { Product } from "@/lib/catalog/schema";
+import type { ProductOptionsProps } from "@/types/ui";
 
-export function ProductOptions({ features, disabled }: { features: Product["features"]; disabled: boolean }) {
+export function ProductOptions({ features, disabled }: ProductOptionsProps) {
   return features.map((feature, index) => (
     <fieldset key={`${feature.name}-${index}`} disabled={disabled}>
       <legend className="mb-3 text-sm font-semibold">{feature.name}</legend>

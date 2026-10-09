@@ -1,7 +1,8 @@
 "use client";
 import { useCallback, useMemo, useSyncExternalStore } from "react";
-import { parseShopping, shoppingStorageKey, type ShoppingState } from "@/lib/shopping/state";
-const changedEvent = "storeshop-shopping-change";
+import { parseShopping, shoppingStorageKey } from "@/lib/shopping/state";
+import type { ShoppingState } from "@/types/shopping";
+import { SHOPPING_CHANGED_EVENT as changedEvent } from "@/constants/shopping";
 export function useShopping(storeCode: string, preview: boolean) {
  const key = shoppingStorageKey(storeCode, preview);
  const getSnapshot = useCallback(() => { try { return window.localStorage.getItem(key) ?? ""; } catch { return ""; } }, [key]);

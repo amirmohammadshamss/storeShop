@@ -1,14 +1,16 @@
-import { estimatedCartTotal, variantKey, type CartItem } from "@/lib/shopping/state";
+import { commonText } from "@/content/fa/common";
+import { shoppingText } from "@/content/fa/shopping";
+import type { CartContentProps } from "@/types/ui";
+import { estimatedCartTotal, variantKey } from "@/lib/shopping/state";
+
 import { formatPersianNumber } from "@/lib/localization/numbers";
 import { CartItemRow } from "./cart-item-row";
 
-type Props = { items: CartItem[]; id: string; basePath: string; preview: boolean; unavailable: (code: string) => boolean; onQuantity: (key: string, quantity: number) => void; onRemove: (key: string) => void };
-
-export function CartContent({ items, id, basePath, preview, unavailable, onQuantity, onRemove }: Props) {
+export function CartContent({ items, id, basePath, preview, unavailable, onQuantity, onRemove }: CartContentProps) {
   const total = estimatedCartTotal(items);
   return (
     <>
-      {items.length === 0 ? <p className="text-stone-500">سبد خرید خالی است. از صفحه محصول، گزینه‌ها را انتخاب و به سبد اضافه کنید.</p> : (
+      {items.length === 0 ? <p className="text-stone-500">{shoppingText.emptyCart}</p> : (
         <ul className="divide-y divide-stone-200">
           {items.map((item, index) => {
             const key = variantKey(item);
@@ -17,9 +19,9 @@ export function CartContent({ items, id, basePath, preview, unavailable, onQuant
           })}
         </ul>
       )}
-      <p className="font-semibold">جمع تقریبی: {total === null ? "قابل محاسبه نیست" : formatPersianNumber(total)} {preview ? "تومان" : "واحد API"}</p>
-      <p className="text-sm leading-7 text-stone-600">قیمت‌ها ممکن است تغییر کرده باشند. مبلغ، موجودی و هزینه ارسال باید در سرویس خرید تأیید شود. پرداخت چندمحصولی هنوز فعال نیست.</p>
-      <button disabled className="rounded-xl bg-stone-200 px-5 py-3 text-sm text-stone-500">پرداخت سبد غیرفعال است</button>
+      <p className="font-semibold">{shoppingText.estimatedTotalPrefix}{total === null ? shoppingText.totalUnavailable : formatPersianNumber(total)} {preview ? commonText.toman : commonText.apiUnit}</p>
+      <p className="text-sm leading-7 text-stone-600">{shoppingText.cartEstimateNotice}</p>
+      <button disabled className="rounded-xl bg-stone-200 px-5 py-3 text-sm text-stone-500">{shoppingText.cartCheckoutDisabled}</button>
     </>
   );
 }

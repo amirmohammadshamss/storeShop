@@ -1,0 +1,10 @@
+export const DRAFT_COOKIE = "storeshop_draft";
+export const DRAFT_LIFETIME = 30 * 60;
+export const DRAFT_VERSION = 1;
+export const MIN_SIGNING_SECRET_LENGTH = 32;
+export const MAX_DRAFT_TOKEN_LENGTH = 3500;
+export const MAX_CHECKOUT_BODY_BYTES = 12000;
+export const MAX_CUSTOMER_NAME_LENGTH = 150;
+export const MAX_CUSTOMER_TEXT_LENGTH = 1000;
+export const MIN_CUSTOMER_NAME_LENGTH = 2;
+export const MIN_CUSTOMER_ADDRESS_LENGTH = 5;

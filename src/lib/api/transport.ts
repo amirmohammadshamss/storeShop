@@ -1,13 +1,16 @@
+import { technicalText } from "@/content/technical";
+import type { BackendFailureKind, BackendRequestOptions, ReadPolicy } from "@/types/api";
+import { BACKEND_TIMEOUT_MS, MAX_CATALOG_CACHE_SECONDS } from "@/constants/api";
 import type { z } from "zod";
 export class BackendError extends Error {
- constructor(public readonly kind: "configuration" | "network" | "http" | "schema", public readonly status?: number) { super(`Backend request failed: ${kind}`); }
+ constructor(public readonly kind: BackendFailureKind, public readonly status?: number) { super(technicalText.catalogCacheSecondsMessageTemplate(kind)); }
 }
-export type ReadPolicy = "catalog" | "private";
+
 export function catalogCacheSeconds(configured: string | undefined): number {
  if (configured === undefined || configured === "") return 0;
  if (!/^\d+$/.test(configured)) throw new BackendError("configuration");
  const seconds = Number(configured);
- if (!Number.isInteger(seconds) || seconds < 0 || seconds > 300) throw new BackendError("configuration");
+ if (!Number.isInteger(seconds) || seconds < 0 || seconds > MAX_CATALOG_CACHE_SECONDS) throw new BackendError("configuration");
  return seconds;
 }
 export async function requestBackend<T>(
@@ -19,10 +22,10 @@ export async function requestBackend<T>(
  try {
   const base = new URL(baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
   url = new URL(path.replace(/^\/+/, ""), base);
-  if (!["https:", "http:"].includes(base.protocol) || base.username || base.password || base.search || base.hash || url.origin !== base.origin || !url.pathname.startsWith(base.pathname) || url.username || url.password) throw new Error("Invalid path");
+  if (!["https:", "http:"].includes(base.protocol) || base.username || base.password || base.search || base.hash || url.origin !== base.origin || !url.pathname.startsWith(base.pathname) || url.username || url.password) throw new Error(technicalText.invalidPath);
  } catch { throw new BackendError("configuration"); }
- if (!Number.isInteger(catalogTtl) || catalogTtl < 0 || catalogTtl > 300) throw new BackendError("configuration");
- const options: RequestInit & { next?: { revalidate: number } } = { signal: AbortSignal.timeout(10000), redirect: "error" };
+ if (!Number.isInteger(catalogTtl) || catalogTtl < 0 || catalogTtl > MAX_CATALOG_CACHE_SECONDS) throw new BackendError("configuration");
+ const options: BackendRequestOptions = { signal: AbortSignal.timeout(BACKEND_TIMEOUT_MS), redirect: "error" };
  if (policy === "catalog" && catalogTtl > 0) options.next = { revalidate: catalogTtl };
  else options.cache = "no-store";
  let response: Response;
@@ -32,3 +35,7 @@ export async function requestBackend<T>(
  try { return schema.parse(await response.json()); }
  catch { throw new BackendError("schema"); }
 }
+
+export type { BackendFailureKind } from "@/types/api";
+export type { BackendRequestOptions } from "@/types/api";
+export type { ReadPolicy } from "@/types/api";

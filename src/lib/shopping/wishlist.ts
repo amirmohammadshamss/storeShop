@@ -1,5 +1,6 @@
-import type { ProductSummary } from "../catalog/schema";
-import { referenceSchema, stateSchema, type ShoppingState } from "./schema";
+import type { ProductSummary } from "@/types/catalog";
+import { referenceSchema, stateSchema } from "./schema";
+import type { ShoppingState } from "@/types/shopping";
 
 export function toggleWishlist(state: ShoppingState, product: ProductSummary): ShoppingState {
  const reference = referenceSchema.parse({ code: product.code, title: product.title, price: product.price });

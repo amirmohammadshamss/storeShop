@@ -1,4 +1,5 @@
-const workerPaths = new Set(["/sw.js", "/service-worker.js", "/js/serviceworker.js"]);
+import { LEGACY_WORKER_PATHS } from "@/constants/workers";
+const workerPaths = new Set(LEGACY_WORKER_PATHS);
 export function isOwnedLegacyWorker(scriptUrl: string, origin: string): boolean {
  try { const url = new URL(scriptUrl); return url.origin === origin && workerPaths.has(url.pathname); }
  catch { return false; }

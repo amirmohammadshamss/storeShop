@@ -1,15 +1,6 @@
 // Classic worker source, compiled during development/build. It never handles fetches or registers a new worker.
 {
- type LifecycleEvent = { waitUntil(promise: Promise<unknown>): void };
- type RetirementWorker = {
-  registration: { scope: string; unregister(): Promise<boolean> };
-  location: { origin: string };
-  caches: CacheStorage;
-  clients: { claim(): Promise<void> };
-  skipWaiting(): Promise<void>;
-  addEventListener(type: "install" | "activate", listener: (event: LifecycleEvent) => void): void;
- };
- const worker = globalThis as unknown as RetirementWorker;
+ const worker = globalThis as unknown as import("@/types/workers").RetirementWorker;
  worker.addEventListener("install", event => event.waitUntil(worker.skipWaiting()));
  worker.addEventListener("activate", event => event.waitUntil((async () => {
   // Workbox's default suffix is the registration scope. Preserve caches belonging to other scopes/apps.

@@ -1,0 +1,15 @@
+export const homeText = {
+  previewFeatureDescription: "محصولات نمونه برای بررسی ظاهر؛ پرداخت هنوز فعال نیست.",
+  previewFeatureTitle: "نسخه نمایشی شفاف",
+  mobileFeatureDescription: "فروشگاه با چیدمان راست‌به‌چپ و نمایش واکنش‌گرا.",
+  mobileFeatureTitle: "مناسب موبایل",
+  productsFeatureDescription: "تصاویر، مشخصات و انتخاب‌های هر محصول را یکجا ببینید.",
+  productsFeatureTitle: "محصولات و جزئیات",
+  backendSetupNotice: "برای دریافت محصولات واقعی، اتصال به سرویس فروشگاه باید پیکربندی شود.",
+  enterStore: "ورود به فروشگاه",
+  viewPreviewStore: "مشاهده فروشگاه نمایشی ←",
+  introduction: "با کد فروشگاه وارد شوید و محصولات را ببینید. برای آشنایی با نسخه جدید، فروشگاه نمایشی را مرور کنید.",
+  headlineSecondLine: "یک قدم نزدیک‌تر",
+  headlineFirstLine: "فروشگاه شما،",
+  tagline: "خرید ساده، انتخاب‌های روزمره",
+} as const;
